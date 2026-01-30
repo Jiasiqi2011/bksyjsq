@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>注册 | 部可思亿</title>
+<link rel="icon" href="https://j47v.top/favicon.ico">
+<link rel="stylesheet" href="../css/index.css">
+<link rel="stylesheet" href="../css/main.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+.card-style{padding:1.5rem;margin-bottom:1.5rem;background:var(--card-bg);border-radius:12px;border:1px solid #eee;max-width:400px;margin-left:auto;margin-right:auto}
+.form-input{margin-bottom:15px;position:relative}
+.form-input input{width:100%;padding:12px;border:2px solid #0096c8;border-radius:6px;background:#fff;transition:border-color 0.3s}
+.form-input input:focus{border-color:#00d4aa;outline:none}
+.dark .form-input input{background:#2a2a2a;color:#e0e0e0;border-color:#0096c8}
+.input-valid{border-color:#28a745 !important}
+.input-invalid{border-color:#dc3545 !important}
+.validation-hint{font-size:0.8rem;margin-top:5px;display:none}
+.hint-valid{color:#28a745}
+.hint-invalid{color:#dc3545}
+.dl-btn{padding:12px;width:100%;background:linear-gradient(90deg,#0096c8,#00d4aa);color:white;border-radius:6px;font-weight:600;border:none;cursor:pointer;font-size:1rem;transition:opacity 0.3s}
+.dl-btn:disabled{opacity:0.5;cursor:not-allowed}
+.password-strength{margin-top:5px;height:4px;border-radius:2px;background:#e0e0e0;overflow:hidden}
+.strength-bar{height:100%;width:0%;transition:width 0.3s,background 0.3s}
+.back-btn{display:inline-block;margin-top:30px;color:#0096c8;text-decoration:none;font-weight:500}
+.section-title{margin-bottom:15px;color:var(--text-color);font-size:1.3rem}
+</style>
+</head>
+<body>
+<div class="loader">
+<div class="spinner">
+<div class="dot1"></div>
+<div class="dot2"></div>
+<div class="dot3"></div>
+</div>
+</div>
+<button class="theme-toggle" title="切换主题">
+<i class="fas fa-palette"></i>
+</button>
+
+<div class="main-container">
+
+<div class="card-style">
+<div class="section-title">账号注册</div>
+<div class="form-input">
+    <input type="text" id="regUsername" placeholder="用户名 (2-8个字符)" maxlength="8">
+    <div id="usernameHint" class="validation-hint"></div>
+</div>
+<div class="form-input">
+    <input type="password" id="regPassword" placeholder="密码 (8-12位，含字母和数字)" maxlength="12">
+    <div class="password-strength">
+        <div id="strengthBar" class="strength-bar"></div>
+    </div>
+    <div id="passwordHint" class="validation-hint"></div>
+</div>
+<div class="form-input">
+    <input type="password" id="regConfirm" placeholder="确认密码" maxlength="12">
+    <div id="confirmHint" class="validation-hint"></div>
+</div>
+<div class="form-input">
+    <input type="email" id="regEmail" placeholder="电子邮箱 (例如: example@domain.com)" 
+           pattern="[^@\s]+@[^@\s]+\.[^@\s]+">
+    <div id="emailHint" class="validation-hint"></div>
+</div>
+<button class="dl-btn" id="registerBtn" onclick="register()" disabled>完成注册</button>
+</div>
+
+<a href="../index.html" class="back-btn"><i class="fas fa-arrow-left"></i> 返回首页</a>
+</div>
+
+<script src="../js/index.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+    setTimeout(()=>{
+        document.querySelector('.loader').classList.add('hidden');
+        setTimeout(()=>{document.querySelector('.loader').style.display='none'},500);
+    },1000);
+    
+    initValidation();
+});
+
+let isFormValid = false;
+
+function initValidation() {
+    const usernameInput = document.getElementById('regUsername');
+    const passwordInput = document.getElementById('regPassword');
+    const confirmInput = document.getElementById('regConfirm');
+    const emailInput = document.getElementById('regEmail');
+    const registerBtn = document.getElementById('registerBtn');
+
+    // 用户名验证
+    usernameInput.addEventListener('input', function() {
+        const value = this.value.trim();
+        const hint = document.getElementById('usernameHint');
+        
+        if (value.length < 2) {
+            this.classList.remove('input-valid');
+            this.classList.add('input-invalid');
+            hint.textContent = '用户名至少需要2个字符';
+            hint.className = 'validation-hint hint-invalid';
+            hint.style.display = 'block';
+        } else if (value.length > 8) {
+            this.classList.remove('input-valid');
+            this.classList.add('input-invalid');
+            hint.textContent = '用户名不能超过8个字符';
+            hint.className = 'validation-hint hint-invalid';
+            hint.style.display = 'block';
+        } else {
+            this.classList.remove('input-invalid');
+            this.classList.add('input-valid');
+            hint.textContent = '用户名格式正确';
+            hint.className = 'validation-hint hint-valid';
+            hint.style.display = 'block';
+        }
+        checkFormValidity();
+    });
+
+    // 密码强度验证
+    passwordInput.addEventListener('input', function() {
+        const value = this.value;
+        const hint = document.getElementById('passwordHint');
+        const strengthBar = document.getElementById('strengthBar');
+        
+        // 密码强度检查
+        let strength = 0;
+        let message = '';
+        
+        if (value.length >= 8) strength += 25;
+        if (value.length >= 10) strength += 25;
+        if (/[A-Za-z]/.test(value)) strength += 25;
+        if (/\d/.test(value)) strength += 25;
+        
+        // 更新强度条
+        strengthBar.style.width = strength + '%';
+        
+        if (strength < 50) {
+            strengthBar.style.background = '#dc3545';
+            message = '密码太弱';
+        } else if (strength < 75) {
+            strengthBar.style.background = '#ffc107';
+            message = '密码中等';
+        } else {
+            strengthBar.style.background = '#28a745';
+            message = '密码强壮';
+        }
+        
+        // 具体验证
+        if (value.length < 8) {
+            this.classList.remove('input-valid');
+            this.classList.add('input-invalid');
+            hint.textContent = '密码至少需要8位';
+            hint.className = 'validation-hint hint-invalid';
+        } else if (!/[A-Za-z]/.test(value) || !/\d/.test(value)) {
+            this.classList.remove('input-valid');
+            this.classList.add('input-invalid');
+            hint.textContent = '必须包含字母和数字';
+            hint.className = 'validation-hint hint-invalid';
+        } else {
+            this.classList.remove('input-invalid');
+            this.classList.add('input-valid');
+            hint.textContent = message;
+            hint.className = 'validation-hint hint-valid';
+        }
+        hint.style.display = 'block';
+        
+        // 同时检查确认密码
+        if (confirmInput.value) {
+            validateConfirmPassword();
+        }
+        checkFormValidity();
+    });
+
+    // 确认密码验证
+    confirmInput.addEventListener('input', validateConfirmPassword);
+    
+    function validateConfirmPassword() {
+        const password = passwordInput.value;
+        const confirm = confirmInput.value;
+        const hint = document.getElementById('confirmHint');
+        
+        if (!confirm) {
+            confirmInput.classList.remove('input-valid', 'input-invalid');
+            hint.style.display = 'none';
+        } else if (password !== confirm) {
+            confirmInput.classList.remove('input-valid');
+            confirmInput.classList.add('input-invalid');
+            hint.textContent = '两次输入的密码不一致';
+            hint.className = 'validation-hint hint-invalid';
+            hint.style.display = 'block';
+        } else {
+            confirmInput.classList.remove('input-invalid');
+            confirmInput.classList.add('input-valid');
+            hint.textContent = '密码一致';
+            hint.className = 'validation-hint hint-valid';
+            hint.style.display = 'block';
+        }
+        checkFormValidity();
+    }
+
+    // 邮箱验证
+    emailInput.addEventListener('input', function() {
+        const value = this.value.trim();
+        const hint = document.getElementById('emailHint');
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        
+        if (!value) {
+            this.classList.remove('input-valid', 'input-invalid');
+            hint.style.display = 'none';
+        } else if (!emailRegex.test(value)) {
+            this.classList.remove('input-valid');
+            this.classList.add('input-invalid');
+            hint.textContent = '请输入有效的邮箱地址 (例如: example@domain.com)';
+            hint.className = 'validation-hint hint-invalid';
+            hint.style.display = 'block';
+        } else {
+            this.classList.remove('input-invalid');
+            this.classList.add('input-valid');
+            hint.textContent = '邮箱格式正确';
+            hint.className = 'validation-hint hint-valid';
+            hint.style.display = 'block';
+        }
+        checkFormValidity();
+    });
+
+    // 检查整个表单的有效性
+    function checkFormValidity() {
+        const usernameValid = usernameInput.classList.contains('input-valid');
+        const passwordValid = passwordInput.classList.contains('input-valid');
+        const confirmValid = confirmInput.classList.contains('input-valid');
+        const emailValid = emailInput.classList.contains('input-valid');
+        
+        isFormValid = usernameValid && passwordValid && confirmValid && emailValid;
+        registerBtn.disabled = !isFormValid;
+    }
+}
+
+async function register() {
+    if (!isFormValid) {
+        alert('请正确填写所有信息');
+        return;
+    }
+
+    const username = document.getElementById('regUsername').value.trim();
+    const password = document.getElementById('regPassword').value;
+    const confirm = document.getElementById('regConfirm').value;
+    const email = document.getElementById('regEmail').value.trim();
+    
+    // 双重检查
+    if (password !== confirm) {
+        alert('密码不一致');
+        return;
+    }
+    
+    // 显示加载状态
+    const registerBtn = document.getElementById('registerBtn');
+    const originalText = registerBtn.textContent;
+    registerBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 注册中...';
+    registerBtn.disabled = true;
+
+    try {
+        const response = await fetch('/.netlify/functions/dl', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({action: 'register', username, password, email})
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            showSuccessModal();
+        } else {
+            alert('注册失败：' + result.error);
+        }
+    } catch (error) {
+        alert('网络错误，请稍后重试');
+    } finally {
+        registerBtn.textContent = originalText;
+        registerBtn.disabled = !isFormValid;
+    }
+}
+
+function showSuccessModal() {
+    const modal = document.createElement('div');
+    modal.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999';
+    modal.innerHTML = `
+    <div style="background:var(--card-bg);padding:1.5rem;border-radius:8px;max-width:400px;text-align:center;border:1px solid var(--border-color)">
+        <i class="fas fa-check-circle" style="font-size:3rem;color:#28a745;margin-bottom:1rem"></i>
+        <h3 style="margin-bottom:1rem;color:var(--text-color)">注册成功！</h3>
+        <p style="margin-bottom:1rem;color:var(--text-color)">您现在可以登录：</p>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:1.5rem">
+            <a href="https://blog.j47v.top" target="_blank" style="padding:0.5rem;background:var(--bg-color);border-radius:4px;text-decoration:none;color:var(--text-color);border:1px solid var(--border-color)">
+                <i class="fas fa-blog"></i>
+                <div style="font-size:0.8rem">博客</div>
+            </a>
+            <a href="https://cloud.j47v.top" target="_blank" style="padding:0.5rem;background:var(--bg-color);border-radius:4px;text-decoration:none;color:var(--text-color);border:1px solid var(--border-color)">
+                <i class="fas fa-cloud"></i>
+                <div style="font-size:0.8rem">云服务</div>
+            </a>
+            <a href="https://dh.j47v.top" target="_blank" style="padding:0.5rem;background:var(--bg-color);border-radius:4px;text-decoration:none;color:var(--text-color);border:1px solid var(--border-color)">
+                <i class="fas fa-globe"></i>
+                <div style="font-size:0.8rem">导航</div>
+            </a>
+        </div>
+        <button onclick="location.href='../index.html'" style="padding:0.8rem 2rem;background:#0096c8;color:white;border:none;border-radius:6px;cursor:pointer">返回首页</button>
+    </div>`;
+    document.body.appendChild(modal);
+}
+</script>
+</body>
+</html>
