@@ -103,7 +103,7 @@ function isValidUrl(string) {
 }
 
 // ==================== 数据库查询函数 ====================
-
+async function queryD1Database(sql, params = []) {
   const accountId = 'f014b972b7da7cdb3eec3db9311c8b5e'; 
   const apiToken = 'mjPJGnAZItvAowaHKEWXwJ2M7XmGhFa5ZR0O-NTe';
   const databaseId = '11210f1c-a626-4eeb-9d5a-bad025cd58e8'; 
@@ -129,12 +129,12 @@ function isValidUrl(string) {
       }
     );
 
-    if (!response.ok) throw new Error(`D1错误: ${response.status}`);
+    if (!response.ok) throw new Error(`错误: ${response.status}`);
     
     const data = await response.json();
     return data.success ? data.result || [] : [];
   } catch (error) {
-    console.error('数据库查询错误:', error);
+    console.error('查询错误:', error);
     throw error;
   }
 }
@@ -189,7 +189,7 @@ export async function onRequest(context) {
         }), { status: 400, headers });
       }
       
-      // 验证数据（复用你的逻辑）
+      // 验证数据
       const sanitizedUsername = sanitizeInput(username);
       const sanitizedEmail = sanitizeInput(email);
       
@@ -317,7 +317,7 @@ export async function onRequest(context) {
     }
     
     // ========== 其他路径 ==========
-    return new Response(JSON.stringify({ error: 'API路径未找到' }), {
+    return new Response(JSON.stringify({ error: '未找到' }), {
       status: 404, headers
     });
     
