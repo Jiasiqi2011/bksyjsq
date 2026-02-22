@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>活动 | 部可思亿</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link rel="stylesheet" href="../css/index.css">
+<link rel="stylesheet" href="../css/main.css">
+<link rel="icon" href="https://j47v.top/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+body{background:#f8f9fa;margin:0;padding:0;font-family:sans-serif}
+.loader{position:fixed;top:0;left:0;width:100%;height:100%;background:#fff;z-index:9999}
+.spinner{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)}
+.dot1,.dot2,.dot3{width:12px;height:12px;background:#0096c8;border-radius:50%;display:inline-block;animation:bounce 1.4s ease-in-out infinite}
+.dot2{animation-delay:-0.32s}
+.dot3{animation-delay:-0.16s}
+@keyframes bounce{0%,80%,100%{transform:scale(0)}40%{transform:scale(1)}}
+.activity-layout{display:flex;max-width:1200px;margin:30px auto;padding:0 20px;gap:30px}
+.activity-sidebar{flex:0 0 240px}
+.activity-nav{display:flex;flex-direction:column;gap:8px}
+.nav-btn{background:#fff;border:2px solid #e0e0e0;padding:14px 18px;border-radius:8px;text-align:left;font-size:0.95rem;font-weight:600;color:#333;cursor:pointer;transition:all 0.3s;display:flex;align-items:center;gap:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nav-btn:hover{background:#f5f5f5;transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,0.08)}
+.nav-btn.active{background:linear-gradient(90deg,#0096c8,#00d4aa);color:white;border-color:#0096c8}
+.nav-btn i{font-size:1.1rem;flex-shrink:0}
+.activity-content{flex:1}
+.activity-card{background:#fff;border:2px solid #e0e0e0;border-radius:8px;padding:2.5rem;min-height:500px;display:none}
+.activity-card.active{display:block}
+.card-title{font-size:2rem;margin-bottom:1.2rem;color:#333}
+.card-desc{font-size:1.1rem;color:#666;line-height:1.6;margin-bottom:1.8rem}
+.card-content{color:#555;line-height:1.7;font-size:1rem}
+.card-content p{margin-bottom:1.2rem}
+.card-content ul{margin-bottom:1.5rem;padding-left:1.5rem}
+.card-content li{margin-bottom:0.5rem}
+.action-btn{display:inline-block;padding:12px 24px;background:linear-gradient(90deg,#0096c8,#00d4aa);color:white;text-decoration:none;border-radius:6px;font-weight:600;border:none;cursor:pointer;margin-top:15px;transition:all 0.3s}
+.action-btn:hover{transform:translateY(-2px);box-shadow:0 6px 15px rgba(0,150,200,0.2)}
+@media(max-width:900px){.activity-layout{flex-direction:column;margin:20px auto;gap:20px}.activity-sidebar{flex:0 0 auto;width:100%}.activity-nav{flex-direction:row;flex-wrap:wrap;gap:6px}.nav-btn{flex:1;min-width:140px;padding:12px 14px;font-size:0.9rem}.activity-card{padding:1.8rem;min-height:400px}.card-title{font-size:1.6rem}}
+@media(max-width:600px){.activity-nav{flex-direction:column}.nav-btn{min-width:100%}.activity-card{padding:1.5rem;min-height:350px}}
+</style>
+</head>
+<body>
+<div class="loader"><div class="spinner"><div class="dot1"></div><div class="dot2"></div><div class="dot3"></div></div></div>
+<div class="activity-layout">
+<div class="activity-sidebar">
+<div class="activity-nav" id="activity-nav"></div>
+</div>
+<div class="activity-content" id="activity-content"></div>
+</div>
+<script src="../js/index.js"></script>
+<script>
+const activities = [
+{
+    navTitle: "更新公告",
+    title: "更新公告",
+    subtitle: "2026.2.11",
+    content: `
+<p>修复了部分已知BUG,提升了网站性能  </p>
+`,
+    icon: "fas fa-gamepad",
+  
+},
+{
+    navTitle: "友链秒收",
+    title: "交换友情链接",
+    subtitle: "与其他优质网站交换友情链接互相推广",
+    content: `
+<p>欢迎技术、学习、创意类网站与我们交换友情链接</p>
+<p>要求：</p>
+<ul>
+<li>网站内容健康、合法，无不良信息</li>
+<li>网站有稳定的访问量和更新频率</li>
+<li>已添加本站链接（我们会在确认后添加贵站链接）</li>
+</ul>
+<p>如果您想与我们交换友情链接，请先在我们的友链页面添加您的网站</p>
+`,
+    icon: "fas fa-link",
+    buttonText: "前往友链",
+    buttonUrl: "https://bksy.rf.gd/yl.php"
+},
+{
+    navTitle: "反馈有￥",
+    title: "Bug反馈有奖",
+    subtitle: "如果您在我们的网站上遇到了bug，请反馈给我们",
+    content: `
+<p>我们致力于提供更好的用户体验，如果您在使用过程中遇到任何问题欢迎反馈</p>
+<p>反馈时请提供以下信息：</p>
+<ul>
+<li>遇到了什么问题</li>
+<li>出现的页面地址</li>
+<li>您的浏览器和设备信息</li>
+<li>如何复现这个bug的步骤</li>
+</ul>
+<p>如果我们确认是有用的问题报告，将会给您一些￥作为回报！</p>
+`,
+    icon: "fas fa-bug",
+    buttonText: "发送反馈",
+    buttonUrl: "#",
+    buttonOnclick: "alert('邮件 admin@j47v.top 联系！')"
+},
+{
+    navTitle: "老站纪念",
+    title: "回到老站",
+    subtitle: "这个网站以前叫 J47V，承载了许多回怀旧是一种情怀，创新是永恒的动力！",
+    content: `
+<p>点击下方按钮可以回到老站界面，看看我们曾经的模样</p>
+<ul>
+<li>经典的设计风格</li>
+<li>历史的内容存档</li>
+<li>曾经的网站布局</li>
+</ul>
+<p>通过对比新旧网站，您可以感受到我们的进步和成长。我们保留了老站作为历史纪念，同时也不断创新，提供更好的服务</p>
+`,
+    icon: "fas fa-history",
+    buttonText: "访问老站",
+    buttonUrl: "https://old.j47v.top"
+},
+
+{
+    navTitle: "送3000积分",
+    title: "即将上线",
+    subtitle: "敬请期待！",
+    content: `<p>新活动正在筹备中，即将上线，敬请期待！</p>`,
+    icon: "fas fa-star",
+    buttonText: "规划中",
+    buttonUrl: "#"
+},
+{
+    navTitle: "签到福利",
+    title: "计划中",
+    subtitle: "更多精彩活动即将推出",
+    content: `<p>我们正在计划更多有趣的活动，请保持关注！</p>`,
+    icon: "fas fa-bolt",
+    buttonText: "规划中",
+    buttonUrl: "#"
+}
+];
+
+function initActivities() {
+    const navContainer = document.getElementById('activity-nav');
+    const contentContainer = document.getElementById('activity-content');
+    
+    activities.forEach((activity, index) => {
+        const navBtn = document.createElement('button');
+        navBtn.className = `nav-btn ${index === 0 ? 'active' : ''}`;
+        navBtn.setAttribute('data-target', activity.navTitle);
+        navBtn.innerHTML = `<i class="${activity.icon}"></i>${activity.navTitle}`;
+        navBtn.addEventListener('click', function() {
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+            document.querySelectorAll('.activity-card').forEach(card => card.classList.remove('active'));
+            document.getElementById(`card-${activity.navTitle}`).classList.add('active');
+        });
+        navContainer.appendChild(navBtn);
+        
+        const card = document.createElement('div');
+        card.id = `card-${activity.navTitle}`;
+        card.className = `activity-card ${index === 0 ? 'active' : ''}`;
+        
+        let buttonHTML = '';
+        if (activity.buttonOnclick) {
+            buttonHTML = `<button class="action-btn" onclick="${activity.buttonOnclick}">${activity.buttonText}</button>`;
+        } else if (activity.buttonUrl) {
+            const target = activity.buttonUrl.startsWith('http') ? ' target="_blank"' : '';
+            buttonHTML = `<a href="${activity.buttonUrl}" class="action-btn"${target}>${activity.buttonText}</a>`;
+        }
+        
+        card.innerHTML = `
+            <h2 class="card-title">${activity.title}</h2>
+            <p class="card-desc">${activity.subtitle}</p>
+            <div class="card-content">${activity.content}</div>
+            ${buttonHTML}
+        `;
+        contentContainer.appendChild(card);
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const loader = document.querySelector('.loader');
+    setTimeout(() => {
+        loader.classList.add('hidden');
+        setTimeout(() => { loader.style.display = 'none' }, 500);
+    }, 1500);
+    
+    initActivities();
+});
+</script>
+</body>
+</html>

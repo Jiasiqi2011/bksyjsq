@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>搜索 | 部可思亿</title>
+<link rel="icon" href="https://j47v.top/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="../css/index.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>.search-main{max-width:800px;margin:120px auto 60px;padding:0 20px}.search-header{text-align:center;margin-bottom:40px}.search-header h1{font-size:2.8rem!important;margin-bottom:15px!important;background:linear-gradient(90deg,#0096c8,#00d4aa)!important;-webkit-background-clip:text!important;-webkit-text-fill-color:transparent!important}.search-header p{color:#555;font-size:1.1rem;opacity:0.8}.dark .search-header p{color:#e0e0e0}.search-box{display:flex;gap:10px;margin:30px 0}.search-box input{flex:1;padding:15px;border:2px solid #0096c8;border-radius:8px;font-size:1.1rem;background:#fff;color:#333}.dark .search-box input{background:#2a2a2a;color:#e0e0e0;border-color:#0096c8}.search-btn{background:linear-gradient(90deg,#0096c8,#00d4aa);color:white;border:none;padding:15px 30px;border-radius:8px;cursor:pointer;font-size:1rem}.back-btn{display:inline-flex;align-items:center;gap:8px;margin-top:30px;color:#0096c8;text-decoration:none;font-weight:500}.dark .back-btn{color:#0096c8}.search-results{margin-top:40px}.result-item{background:#fff;padding:20px;border-radius:12px;margin-bottom:15px;border:2px solid #eee;transition:all 0.3s}.dark .result-item{background:#2a2a2a;border-color:#444}.result-item:hover{border-color:#0096c8;transform:translateY(-3px)}.result-title{font-size:1.2rem;margin-bottom:8px;color:#0096c8}.dark .result-title{color:#0096c8}.result-desc{color:#333;margin-bottom:10px;font-size:0.95rem}.dark .result-desc{color:#e0e0e0}.result-link{color:#0096c8;text-decoration:none;font-size:0.9rem}.no-results{padding:40px;text-align:center;color:#888}.dark .no-results{color:#aaa}.search-keys{display:flex;flex-wrap:wrap;gap:10px;margin:15px 0;justify-content:center}.key-btn{padding:6px 12px;background:rgba(0,150,200,0.1);color:#0096c8;border-radius:6px;font-size:0.9rem;cursor:pointer;transition:background 0.3s}.key-btn:hover{background:rgba(0,150,200,0.2)}</style>
+</head>
+<body>
+<div class="loader">
+<div class="spinner">
+<div class="dot1"></div>
+<div class="dot2"></div>
+<div class="dot3"></div>
+</div>
+</div>
+<div class="search-main">
+<div class="search-header">
+<h1>搜索-部可思亿</h1>
+<div class="search-keys" id="searchKeys">
+<span class="key-btn" onclick="searchKeyword('二维码')">二维码</span>
+<span class="key-btn" onclick="searchKeyword('音乐')">音乐</span>
+<span class="key-btn" onclick="searchKeyword('域名')">域名</span>
+<span class="key-btn" onclick="searchKeyword('工具')">工具</span>
+<span class="key-btn" onclick="searchKeyword('SSL')">SSL证书</span>
+</div>
+</div>
+<div class="search-box">
+<input type="text" placeholder="输入搜索关键词..." id="searchInput" onkeypress="if(event.key==='Enter')searchSite()">
+<button class="search-btn" id="searchAction" onclick="searchSite()"><i class="fas fa-search"></i> 搜索</button>
+</div>
+<div class="search-results" id="searchResults">
+<div class="no-results">
+<i class="fas fa-search" style="font-size:3rem;margin-bottom:15px;color:#ddd"></i>
+<p>输入关键词开始搜索站内内容</p>
+</div>
+</div>
+<div style="text-align:center; margin-top:30px">
+  <a href="../index.html" class="back-btn">
+    <i class="fas fa-arrow-left"></i> 返回首页
+  </a>
+</div>
+</div>
+<script>document.addEventListener('DOMContentLoaded',function(){const loader=document.querySelector('.loader');setTimeout(()=>{loader.classList.add('hidden');setTimeout(()=>{loader.style.display='none'},500);},1500);const themeToggle=document.querySelector('.theme-toggle');if(themeToggle){themeToggle.addEventListener('click',()=>{document.body.classList.toggle('dark');localStorage.setItem('theme',document.body.classList.contains('dark')?'dark':'light');});themeToggle.addEventListener('mousedown',()=>{themeToggle.style.transform='scale(0.9)';});themeToggle.addEventListener('mouseup',()=>{themeToggle.style.transform='scale(1)';});themeToggle.addEventListener('mouseleave',()=>{themeToggle.style.transform='scale(1)';});}const savedTheme=localStorage.getItem('theme');if(savedTheme==='dark'){document.body.classList.add('dark');}});const siteData=[{keywords:['二维码','生成','QR','code'],title:'二维码生成工具',desc:'快速生成定制二维码，支持多种格式和样式',link:'https://hub.j47v.top/main/wed/tool/2wm'},{keywords:['图片','压缩','optimize','photo'],title:'图片压缩工具',desc:'优化图片大小与质量，保持最佳显示效果',link:'https://hub.j47v.top/main/wed/tool/piccom'},{keywords:['音乐','歌曲','播放','listen'],title:'音乐探索',desc:'搜索和播放音乐，发现你喜欢的歌曲',link:'https://app.j47v.top/yy.html'},{keywords:['域名','免费','DNS','domain'],title:'免费域名服务',desc:'获取专属网络地址，建立个人品牌',link:'https://dns.j47v.top'},{keywords:['工具','开发','资源','共享'],title:'维物谷仓库',desc:'包含二维码生成、图片压缩等实用工具',link:'https://hub.j47v.top'},{keywords:['教程','API','技术','学习'],title:'技术教程',desc:'具体API实现与开发实战指南',link:'xm.html'},{keywords:['活动','参与','事件','activity'],title:'精彩活动',desc:'交换友链、反馈Bug、游戏交流等活动',link:'hd.html'},{keywords:['友链','链接','交换','friends'],title:'友情链接',desc:'与其他优质网站交换友情链接',link:'https://bksy.rf.gd/yl.php'},{keywords:['关于','介绍','作者','about'],title:'关于我们',desc:'了解部可思亿的项目理念和团队信息',link:'gy.html'},{keywords:['搜索','查找','search','寻找'],title:'站内搜索',desc:'搜索部可思亿站内所有功能与内容',link:'ss.html'},{keywords:['宇宙','平台','网站','services'],title:'我们的平台',desc:'部可思亿的核心平台介绍',link:'xm.html'},{keywords:['项目','文章','技术','project'],title:'技术文章',desc:'精选热门技术文章与开发资源',link:'xm.html'},{keywords:['首页','主页','main','home'],title:'部可思亿首页',desc:'技术分享平台',link:'../index.html'},{keywords:['SSL','证书','安全','https'],title:'免费SSL证书',desc:'为网站启用HTTPS加密',link:'https://cloud.j47v.top'},{keywords:['托管','网站','部署','hosting'],title:'免费网站托管',desc:'零成本部署你的项目',link:'https://cloud.j47v.top'},{keywords:['源码','代码','开源','source'],title:'源码资源',desc:'开源项目与代码库',link:'https://hub.j47v.top'},{keywords:['图床','图片','托管','image'],title:'共享图床',desc:'稳定免费的图片托管服务',link:'https://wgh.ct.ws/image.php'}];function searchSite(){const query=document.getElementById('searchInput').value.trim().toLowerCase();if(!query){document.getElementById('searchResults').innerHTML=`<div class="no-results"><p>请输入搜索关键词</p></div>`;return;}document.getElementById('searchResults').innerHTML=`<div style="text-align:center;padding:20px"><div class="spinner" style="width:40px;height:40px;margin:0 auto"><div class="dot1" style="width:12px;height:12px"></div><div class="dot2" style="width:12px;height:12px"></div><div class="dot3" style="width:12px;height:12px"></div></div><p style="margin-top:15px;color:#333">搜索中: ${query}</p></div>`;setTimeout(()=>{const results=[];siteData.forEach(item=>{let score=0;item.keywords.forEach(keyword=>{if(query.includes(keyword.toLowerCase())){score+=10;}if(keyword.toLowerCase().includes(query)){score+=5;}});if(item.title.toLowerCase().includes(query)){score+=20;}if(score>0){results.push({...item,score});}});results.sort((a,b)=>b.score-a.score);if(results.length===0){document.getElementById('searchResults').innerHTML=`<div class="no-results"><i class="fas fa-search" style="font-size:3rem;margin-bottom:15px;color:#ddd"></i><p>未找到相关内容，请尝试其他关键词</p></div>`;return;}let html='<div style="margin-bottom:15px; color:#666">找到 '+results.length+' 条结果</div>';results.forEach(item=>{html+=`<div class="result-item"><div class="result-title">${item.title}</div><div class="result-desc">${item.desc}</div><a href="${item.link}" class="result-link" target="_blank"><i class="fas fa-external-link-alt"></i> 访问</a></div>`;});document.getElementById('searchResults').innerHTML=html;},800);}function searchKeyword(keyword){document.getElementById('searchInput').value=keyword;searchSite();}</script>
+</body>
+</html>
