@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>站内搜索 | 部可思亿 - 开源公益社区</title>
+<meta name="description" content="在部可思亿开源公益社区搜索技术教程、免费工具、API资源、活动信息。快速找到你需要的内容。">
+<meta property="og:title" content="站内搜索 | 部可思亿 - 开源公益社区">
+<meta property="og:description" content="在部可思亿开源公益社区搜索技术教程、免费工具、API资源、活动信息。">
+<meta property="og:image" content="https://bksy.top/pic/og-image.jpg">
+<meta property="og:url" content="https://bksy.top/ss.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="站内搜索 | 部可思亿 - 开源公益社区">
+<meta name="twitter:description" content="在部可思亿开源公益社区搜索技术教程、免费工具、API资源、活动信息。">
+<meta name="twitter:image" content="https://bksy.top/pic/og-image.jpg">
+<link rel="icon" href="https://bksy.top/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="../css/index.css">
+<link rel="stylesheet" href="../css/main.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"部可思亿","url":"https://bksy.top","description":"开源公益技术社区","potentialAction":{"@type":"SearchAction","target":"https://bksy.top/ss.html?q={search_term_string}","query-input":"required name=search_term_string"}}</script>
+</head>
+<body>
+<div class="loader"><div class="spinner"><div class="dot1"></div><div class="dot2"></div><div class="dot3"></div></div></div>
+<div class="search-main">
+<div class="search-header"><h1>搜索-部可思亿</h1><div class="search-keys" id="searchKeys"><span class="key-btn" onclick="searchKeyword('二维码')">二维码</span><span class="key-btn" onclick="searchKeyword('音乐')">音乐</span><span class="key-btn" onclick="searchKeyword('域名')">域名</span><span class="key-btn" onclick="searchKeyword('工具')">工具</span><span class="key-btn" onclick="searchKeyword('SSL')">SSL证书</span></div></div>
+<div class="search-box"><input type="text" placeholder="输入搜索关键词..." id="searchInput" onkeypress="if(event.key==='Enter')searchSite()"><button class="search-btn" onclick="searchSite()"><i class="fas fa-search"></i> 搜索</button></div>
+<div class="search-results" id="searchResults"><div class="no-results"><i class="fas fa-search" style="font-size:3rem;margin-bottom:15px;color:#ddd"></i></div></div>
+</div>
+<script src="../js/index.js"></script>
+<script>
+const siteData=[{keywords:['二维码','生成','QR','code'],title:'二维码生成工具',desc:'快速生成定制二维码',link:'https://api.bksy.top/main/wed/tool/2wm'},{keywords:['图片','压缩','optimize','photo'],title:'图片压缩工具',desc:'优化图片大小与质量',link:'https://api.bksy.top/main/wed/tool/piccom'},{keywords:['音乐','歌曲','播放','listen'],title:'音乐探索',desc:'搜索和播放音乐',link:'https://app.bksy.top/yy.html'},{keywords:['域名','免费','DNS','domain'],title:'免费域名服务',desc:'获取专属网络地址',link:'https://cloud.bksy.top'},{keywords:['工具','开发','资源','共享'],title:'维物谷仓库',desc:'包含二维码生成、图片压缩等实用工具',link:'https://api.bksy.top'},{keywords:['教程','API','技术','学习'],title:'技术教程',desc:'具体API实现与开发实战指南',link:'xm.html'},{keywords:['活动','参与','事件','activity'],title:'精彩活动',desc:'交换友链、反馈Bug、游戏交流等活动',link:'hd.html'},{keywords:['友链','链接','交换','friends'],title:'友情链接',desc:'与其他优质网站交换友情链接',link:'https://j47v.top/yl.php'},{keywords:['关于','介绍','作者','about'],title:'关于我们',desc:'了解部可思亿的项目理念和团队信息',link:'gy.html'},{keywords:['搜索','查找','search','寻找'],title:'站内搜索',desc:'搜索部可思亿站内所有功能与内容',link:'ss.html'},{keywords:['宇宙','平台','网站','services'],title:'我们的平台',desc:'部可思亿的核心平台介绍',link:'xm.html'},{keywords:['项目','文章','技术','project'],title:'技术文章',desc:'精选热门技术文章与开发资源',link:'xm.html'},{keywords:['首页','主页','main','home'],title:'部可思亿首页',desc:'技术分享平台',link:'../index.html'},{keywords:['SSL','证书','安全','https'],title:'免费SSL证书',desc:'为网站启用HTTPS加密',link:'https://cloud.bksy.top'},{keywords:['托管','网站','部署','hosting'],title:'免费网站托管',desc:'零成本部署你的项目',link:'https://cloud.j47v.top'},{keywords:['源码','代码','开源','source'],title:'源码资源',desc:'开源项目与代码库',link:'https://api.bksy.top'},{keywords:['图床','图片','托管','image'],title:'共享图床',desc:'稳定免费的图片托管服务',link:'https://j47v.top/wwg/image.php'}];
+function searchSite(){const e=document.getElementById('searchInput').value.trim().toLowerCase();if(!e){document.getElementById('searchResults').innerHTML='<div class="no-results"><p>请输入搜索关键词</p></div>';return}document.getElementById('searchResults').innerHTML='<div style="text-align:center;padding:20px"><p style="color:#333">搜索中: '+e+'</p></div>';setTimeout(()=>{const t=[];siteData.forEach(n=>{let l=0;n.keywords.forEach(o=>{e.includes(o.toLowerCase())&&(l+=10),o.toLowerCase().includes(e)&&(l+=5)}),n.title.toLowerCase().includes(e)&&(l+=20),l>0&&t.push({...n,score:l})}),t.sort((o,e)=>e.score-o.score);if(0===t.length){document.getElementById('searchResults').innerHTML='<div class="no-results"><i class="fas fa-search" style="font-size:3rem;margin-bottom:15px;color:#ddd"></i><p>未找到相关内容</p></div>';return}let n='<div style="margin-bottom:15px;color:#666">找到 '+t.length+' 条结果</div>';t.forEach(o=>{n+='<div class="result-item"><div class="result-title">'+o.title+'</div><div class="result-desc">'+o.desc+'</div><a href="'+o.link+'" class="result-link" target="_blank"><i class="fas fa-external-link-alt"></i> 访问</a></div>'}),document.getElementById('searchResults').innerHTML=n},800)}function searchKeyword(o){document.getElementById('searchInput').value=o,searchSite()}document.addEventListener('DOMContentLoaded',function(){const e=document.querySelector('.loader');setTimeout(()=>{e.classList.add('hidden');setTimeout(()=>{e.style.display='none'},500)},1500);const o=localStorage.getItem('theme');'dark'===o&&document.body.classList.add('dark');const t=document.querySelector('.theme-toggle');t.addEventListener('click',()=>{document.body.classList.toggle('dark'),localStorage.setItem('theme',document.body.classList.contains('dark')?'dark':'light'),t.innerHTML=document.body.classList.contains('dark')?'<i class="fas fa-sun"></i>':'<i class="fas fa-moon"></i>'})});
+</script>
+</body>
+</html>
