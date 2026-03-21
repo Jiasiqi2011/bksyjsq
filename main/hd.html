@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>活动中心 | 部可思亿 - 开源公益社区</title>
+<meta name="description" content="部可思亿开源公益社区官方活动：交换友情链接、反馈Bug赢奖励、访问老站纪念版。">
+<meta property="og:title" content="活动中心 | 部可思亿 - 开源公益社区">
+<meta property="og:description" content="部可思亿开源公益社区官方活动：友链交换、Bug反馈有奖、老站纪念。">
+<meta property="og:image" content="https://bksy.top/pic/og-image.jpg">
+<meta property="og:url" content="https://bksy.top/hd.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="活动中心 | 部可思亿 - 开源公益社区">
+<meta name="twitter:description" content="部可思亿开源公益社区官方活动：友链交换、Bug反馈有奖、老站纪念。">
+<meta name="twitter:image" content="https://bksy.top/pic/og-image.jpg">
+<link rel="icon" href="https://bksy.top/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="../css/index.css">
+<link rel="stylesheet" href="../css/main.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"ItemList","name":"部可思亿社区活动","description":"开源公益社区官方活动列表","numberOfItems":6,"itemListElement":[{"@type":"ListItem","position":1,"name":"更新公告"},{"@type":"ListItem","position":2,"name":"友链秒收"},{"@type":"ListItem","position":3,"name":"反馈有￥"},{"@type":"ListItem","position":4,"name":"老站纪念"},{"@type":"ListItem","position":5,"name":"送3000积分"},{"@type":"ListItem","position":6,"name":"签到福利"}]}</script>
+</head>
+<body>
+<div class="loader"><div class="spinner"><div class="dot1"></div><div class="dot2"></div><div class="dot3"></div></div></div>
+<div class="activity-layout"><div class="activity-sidebar"><div class="activity-nav" id="activity-nav"></div></div><div class="activity-content" id="activity-content"></div></div>
+<script src="../js/index.js"></script>
+<script>
+const activities=[{navTitle:"更新公告",title:"更新公告",subtitle:"2026.3.3",content:"<p>修复了部分已知BUG,提升了网站性能</p>",icon:"fas fa-gamepad"},{navTitle:"友链秒收",title:"交换友情链接",subtitle:"与其他优质网站交换友情链接互相推广",content:'<p>欢迎技术、学习、创意类网站与我们交换友情链接</p><p>要求：</p><ul><li>网站内容健康、合法，无不良信息</li><li>网站有稳定的访问量和更新频率</li><li>已添加本站链接（我们会在确认后添加贵站链接）</li></ul><p>如果您想与我们交换友情链接，请先在我们的友链页面添加您的网站</p>',icon:"fas fa-link",buttonText:"前往友链",buttonUrl:"yl.html"},{navTitle:"反馈有￥",title:"Bug反馈有奖",subtitle:"如果您在我们的网站上遇到了bug，请反馈给我们",content:'<p>我们致力于提供更好的用户体验，如果您在使用过程中遇到任何问题欢迎反馈</p><p>反馈时请提供以下信息：</p><ul><li>遇到了什么问题</li><li>出现的页面地址</li><li>您的浏览器和设备信息</li><li>如何复现这个bug的步骤</li></ul><p>如果我们确认是有用的问题报告，将会给您一些￥作为回报！</p>',icon:"fas fa-bug",buttonText:"发送反馈",buttonUrl:"#",buttonOnclick:"alert('邮件 admin@bksy.top 联系！')"},{navTitle:"老站纪念",title:"回到老站",subtitle:"这个网站以前叫 J47V，承载了许多回怀旧是一种情怀，创新是永恒的动力！",content:'<p>点击下方按钮可以回到老站界面，看看我们曾经的模样</p><ul><li>经典的设计风格</li><li>历史的内容存档</li><li>曾经的网站布局</li></ul><p>通过对比新旧网站，您可以感受到我们的进步和成长。我们保留了老站作为历史纪念，同时也不断创新，提供更好的服务</p>',icon:"fas fa-history",buttonText:"访问老站",buttonUrl:"https://old.j47v.top"},{navTitle:"送3000积分",title:"即将上线",subtitle:"敬请期待！",content:"<p>新活动正在筹备中，即将上线，敬请期待！</p>",icon:"fas fa-star",buttonText:"规划中",buttonUrl:"#"},{navTitle:"签到福利",title:"计划中",subtitle:"更多精彩活动即将推出",content:"<p>我们正在计划更多有趣的活动，请保持关注！</p>",icon:"fas fa-bolt",buttonText:"规划中",buttonUrl:"#"}];
+function initActivities(){const e=document.getElementById('activity-nav'),t=document.getElementById('activity-content');activities.forEach((o,n)=>{const a=document.createElement('button');a.className=`nav-btn ${0===n?'active':''}`,a.setAttribute('data-target',o.navTitle),a.innerHTML=`<i class="${o.icon}"></i>${o.navTitle}`,a.addEventListener('click',function(){document.querySelectorAll('.nav-btn').forEach(e=>e.classList.remove('active')),this.classList.add('active'),document.querySelectorAll('.activity-card').forEach(e=>e.classList.remove('active')),document.getElementById(`card-${o.navTitle}`).classList.add('active')}),e.appendChild(a);const l=document.createElement('div');l.id=`card-${o.navTitle}`,l.className=`activity-card ${0===n?'active':''}`;let r='';o.buttonOnclick?r=`<button class="action-btn" onclick="${o.buttonOnclick}">${o.buttonText}</button>`:o.buttonUrl&&(r=`<a href="${o.buttonUrl}" class="action-btn"${o.buttonUrl.startsWith('http')?' target="_blank"':''}>${o.buttonText}</a>`),l.innerHTML=`<h2 class="card-title">${o.title}</h2><p class="card-desc">${o.subtitle}</p><div class="card-content">${o.content}</div>${r}`,t.appendChild(l)})}
+document.addEventListener('DOMContentLoaded',function(){const e=document.querySelector('.loader');setTimeout(()=>{e.classList.add('hidden');setTimeout(()=>{e.style.display='none'},500)},1500),initActivities()});
+</script>
+</body>
+</html>
